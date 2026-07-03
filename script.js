@@ -64,13 +64,20 @@ const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 
 function openMenu() {
+    navLinks.classList.remove('closing');
     navLinks.classList.add('open');
     hamburger.classList.add('open');
 }
 
 function closeMenu() {
+    if (!navLinks.classList.contains('open')) return;
     navLinks.classList.remove('open');
     hamburger.classList.remove('open');
+    navLinks.classList.add('closing');
+    navLinks.addEventListener('animationend', function handler() {
+        navLinks.classList.remove('closing');
+        navLinks.removeEventListener('animationend', handler);
+    }, { once: true });
 }
 
 hamburger.addEventListener('click', (e) => {
